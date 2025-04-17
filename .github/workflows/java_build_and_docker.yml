@@ -3,11 +3,12 @@ name: Java Build and Docker Push
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -22,7 +23,7 @@ jobs:
 
       - name: Build Project with Gradle
         run: ./gradlew build
- 
+
       - name: Build and Push Docker Image to Docker Hub
         uses: mr-smithers-excellent/docker-build-push@v4
         with:
@@ -30,5 +31,4 @@ jobs:
           registry: docker.io
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
-
+          dockerfile: Dockerfile # Make sure this points to your Dockerfile location if it's not in the root
